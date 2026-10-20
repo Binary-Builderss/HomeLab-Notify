@@ -46,6 +46,7 @@
   </a>
   <ul>
     <li class="optional"><a href="#how">How it works</a></li>
+    <li class="optional"><a href="#dashboard">Dashboard</a></li>
     <li><a href="#app">iPhone app</a></li>
     <li><a href="#support">Support</a></li>
   </ul>
@@ -152,6 +153,32 @@
           </div>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <section id="dashboard" class="dash">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>A dashboard that tells you what is wrong first.</h2>
+        <p>Open incidents at the top, then the host, disks, containers and updates. Choose what to watch, tune rules and schedule maintenance from any browser on your network.</p>
+      </div>
+      <div class="windows">
+        <figure class="window main reveal">
+          <div class="bar" aria-hidden="true"><span></span><span></span><span></span><code>127.0.0.1:8088</code></div>
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/dash/overview-dark.webp">
+            <img src="assets/dash/overview-light.webp" width="1440" height="900" loading="lazy" alt="The dashboard Overview: one open critical incident, the host agent reporting with CPU and memory, disk space, watched containers with jellyfin exited, 12 package updates and an empty notification queue.">
+          </picture>
+        </figure>
+        <figure class="window side reveal" style="--i:2">
+          <div class="bar" aria-hidden="true"><span></span><span></span><span></span><code>127.0.0.1:8088/monitors</code></div>
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/dash/monitors-dark.webp">
+            <img src="assets/dash/monitors-light.webp" width="1440" height="860" loading="lazy" alt="The Monitors page: switches to choose which Docker containers are watched, and the disks reported by the agent.">
+          </picture>
+        </figure>
+      </div>
+      <p class="muted small-note">Screenshots from a local test server with sample data. The dashboard follows your light or dark setting.</p>
     </div>
   </section>
 
