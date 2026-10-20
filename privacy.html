@@ -31,18 +31,22 @@
 <main id="main" class="wrap doc">
   <h1>Privacy policy</h1>
   <p class="meta">Homelab Notify for iPhone and iPad. Last updated 20 October 2026.</p>
-  <p>Homelab Notify does not collect any data. The developer (BinaryBuilders) receives nothing from the app: there is no account, no analytics, no crash reporting, no advertising and no third-party SDK.</p>
+  <p>Homelab Notify does not collect any data. There is no account, no analytics, no crash reporting, no advertising and no third-party SDK.</p>
   <p>The app connects only to the Homelab Notify server that you install on your own machine and pair with the app. What it shows (incidents, containers, rules, host status) comes from that server and is sent back only to it, for example when you acknowledge an incident or change a rule. That server is operated by you, not by us.</p>
   <p>On the device the app stores the paired server address, the device token issued by your server (in the iOS Keychain) and a copy of the last data it loaded, so it stays readable offline. Unpairing the device in the app removes them. Revoking the device from your server's dashboard makes its token useless at any time, even if the app was deleted.</p>
+  <h3>Push notifications</h3>
+  <p>Push notifications are optional and off until you turn them on in the app. When they are on, your server sends each alert through a small relay operated by BinaryBuilders, which forwards it to Apple's push service. The relay receives this device's push token, whether the alert is critical, a warning or resolved, and the incident number. It never receives the alert's title, host or container names, IP addresses or logs, and it does not store the push token: it uses it only to deliver that notification. It keeps an anonymous credential for your server (deleted after 180 days without use) and does not log IP addresses. The notification shows a generic text such as "Critical alert on your server"; the app loads the details from your server when you open it. Your server's administrator can turn push off entirely.</p>
   <p>The demo mode uses built-in sample data and makes no network connections.</p>
   <p>Questions: <a href="mailto:contactus@binarybuilders.dev">contactus@binarybuilders.dev</a>.</p>
 
   <div lang="it">
     <h2 id="it">Informativa sulla privacy</h2>
     <p class="meta">Homelab Notify per iPhone e iPad. Ultimo aggiornamento 20 ottobre 2026.</p>
-    <p>Homelab Notify non raccoglie alcun dato. Lo sviluppatore (BinaryBuilders) non riceve nulla dall'app: nessun account, nessuna statistica d'uso, nessuna segnalazione di crash, nessuna pubblicità e nessun SDK di terze parti.</p>
+    <p>Homelab Notify non raccoglie alcun dato. Nessun account, nessuna statistica d'uso, nessuna segnalazione di crash, nessuna pubblicità e nessun SDK di terze parti.</p>
     <p>L'app si collega solo al server Homelab Notify che installi sulla tua macchina e abbini all'app. Quello che mostra (incidenti, container, regole, stato dell'host) arriva da quel server e viene rimandato solo a lui, per esempio quando prendi in carico un incidente o modifichi una regola. Quel server lo gestisci tu, non noi.</p>
     <p>Sul dispositivo l'app conserva l'indirizzo del server abbinato, il token rilasciato dal tuo server (nel Portachiavi di iOS) e una copia degli ultimi dati caricati, per leggerli anche offline. Disabbinare il dispositivo dall'app li cancella. Revocare il dispositivo dalla dashboard del tuo server rende inutilizzabile il suo token in qualsiasi momento, anche se l'app è stata eliminata.</p>
+    <h3>Notifiche push</h3>
+    <p>Le notifiche push sono facoltative e restano spente finché non le attivi nell'app. Quando sono attive, il tuo server invia ogni avviso tramite un piccolo relay gestito da BinaryBuilders, che lo inoltra al servizio push di Apple. Il relay riceve il token push del dispositivo, se l'avviso è critico, un avvertimento o risolto, e il numero dell'incidente. Non riceve mai il titolo dell'avviso, nomi di host o container, indirizzi IP o log, e non conserva il token push: lo usa solo per consegnare quella notifica. Conserva una credenziale anonima del tuo server (cancellata dopo 180 giorni senza uso) e non registra gli indirizzi IP. La notifica mostra un testo generico come "Avviso critico sul tuo server"; l'app carica i dettagli dal tuo server quando la apri. L'amministratore del tuo server può spegnere del tutto le push.</p>
     <p>La modalità demo usa dati di esempio inclusi nell'app e non fa connessioni di rete.</p>
     <p>Domande: <a href="mailto:contactus@binarybuilders.dev">contactus@binarybuilders.dev</a>.</p>
   </div>

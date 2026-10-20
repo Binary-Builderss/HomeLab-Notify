@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Homelab Notify: quiet alerts for your homelab</title>
-<meta name="description" content="Self-hosted, read-only monitoring for one Ubuntu server. Docker containers, disk space, SSH failures and Ubuntu updates, one Telegram message per problem, and an iPhone app.">
+<meta name="description" content="Self-hosted, read-only monitoring for one Ubuntu server. Docker containers, disk space, SSH failures and Ubuntu updates, one notification per problem on your iPhone or Telegram.">
 <meta name="theme-color" content="#f8f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#15121b" media="(prefers-color-scheme: dark)">
 <meta property="og:title" content="Homelab Notify">
@@ -56,7 +56,7 @@
   <div class="wrap hero">
     <div>
       <h1 class="rise">Quiet alerts for your <em>homelab.</em></h1>
-      <p class="lead rise" style="--i:1">Self-hosted monitoring for one Ubuntu server. One problem, one Telegram message. It reads, it never touches.</p>
+      <p class="lead rise" style="--i:1">Self-hosted monitoring for one Ubuntu server. One problem, one notification. It reads, it never touches.</p>
       <div class="actions rise" style="--i:2">
         <a class="button down" href="#how">How it works <span class="knob"><svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg></span></a>
         <a class="link" href="#app">See the iPhone app</a>
@@ -125,7 +125,7 @@
     <div class="wrap split">
       <div class="sticky reveal">
         <h2>Three parts. All of them on your server.</h2>
-        <p>No cloud service, no account, nothing sent to us. If your internet goes down, the incidents are still recorded and delivered when it is back.</p>
+        <p>Monitoring needs no cloud service and no account. Push to your iPhone goes through a small relay that never sees what the alert says. If your internet goes down, the incidents are still recorded and delivered when it is back.</p>
       </div>
       <ol class="parts">
         <li class="reveal">
@@ -148,8 +148,8 @@
           <svg class="icon" aria-hidden="true"><use href="#i-telegram-logo"/></svg>
           <div>
             <h3>To you</h3>
-            <p>Messages on Telegram, a web dashboard for rules and containers, and an iPhone app paired with a one-time QR code you approve.</p>
-            <p class="tech">Telegram, dashboard, iPhone</p>
+            <p>Push notifications on your iPhone, messages on Telegram, and a web dashboard for rules and containers. The app pairs with a one-time QR code you approve.</p>
+            <p class="tech">Push, Telegram, dashboard</p>
           </div>
         </li>
       </ol>
@@ -220,7 +220,7 @@
             <h2>What you need</h2>
             <ol class="needs">
               <li>One Ubuntu server with Docker Compose. Tested on Ubuntu 26.04.</li>
-              <li>A Telegram bot. An existing bot keeps working: Homelab Notify only sends.</li>
+              <li>Optional: a Telegram bot. An existing bot keeps working: Homelab Notify only sends.</li>
               <li>For the app: the dashboard over HTTPS with a trusted certificate, for example with Tailscale Serve, and iOS 17 or later.</li>
             </ol>
           </div>
