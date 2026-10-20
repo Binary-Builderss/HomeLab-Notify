@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homelab Notify · Quiet alerts for your homelab</title>
+<meta name="description" content="Self-hosted, read-only notifications for one Ubuntu server: Docker containers, disk space, SSH failures and APT updates, delivered to Telegram, with an iPhone app.">
+<meta property="og:title" content="Homelab Notify">
+<meta property="og:description" content="Quiet alerts for your homelab. Self-hosted and read-only.">
+<meta property="og:image" content="https://binary-builderss.github.io/HomeLab-Notify/assets/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon-auto.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-light.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="./" aria-label="Homelab Notify home">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+        <img src="assets/logo-light.svg" alt="Homelab Notify by BinaryBuilders" width="220" height="65">
+      </picture>
+    </a>
+    <nav aria-label="Main">
+      <a class="optional" href="#how">How it works</a>
+      <a href="#app">iPhone app</a>
+      <a href="#support">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <h1>Quiet alerts for your homelab.</h1>
+      <p class="lead">Homelab Notify watches one Ubuntu server and tells you on Telegram when something needs you: a container that stopped, a disk filling up, a burst of SSH login failures, pending updates. One problem, one message. It only reads, never touches.</p>
+      <span class="status">In development · iPhone app coming to the App Store</span>
+    </div>
+    <div class="phone">
+      <img src="assets/screens/01-home.webp" width="600" height="1304" alt="The iPhone app Home screen: one critical and one warning incident, the host agent reporting, every collector ok.">
+    </div>
+  </div>
+
+  <section id="what">
+    <div class="wrap">
+      <h2>What it watches</h2>
+      <p class="intro">Sensible defaults out of the box, every threshold editable from the dashboard or the app.</p>
+      <div class="grid">
+        <div class="card"><h3>Docker containers</h3><p>Only the containers you select. Not running or unhealthy for 30 seconds opens an incident; it closes when the container is back.</p></div>
+        <div class="card"><h3>Disk space</h3><p>Measured on the host, not inside a container. Below 10% free for 5 minutes is critical. Missing data is reported as unknown, never as healthy.</p></div>
+        <div class="card"><h3>SSH login failures</h3><p>Five failures from one address in two minutes raise one warning per address, with a cooldown so a scan does not flood you.</p></div>
+        <div class="card"><h3>Ubuntu updates</h3><p>A daily digest at 09:00 when packages are pending. It reads the local APT cache and never runs <code>apt update</code>.</p></div>
+        <div class="card"><h3>The agent itself</h3><p>If the host agent stops reporting for three minutes, you hear about it.</p></div>
+        <div class="card"><h3>Quiet hours and maintenance</h3><p>Night hours hold minor notices; critical ones still arrive. Maintenance windows record incidents without notifying.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="intro">Everything runs on your server. No cloud service, no account, nothing sent to us.</p>
+      <div class="flow">
+        <div class="card"><h3>Agent on the host</h3><p>A small Go service under systemd reads Docker, disk, the SSH journal and the APT cache, and reports to the server over loopback only.</p></div>
+        <div class="card"><h3>Server in Docker</h3><p>A Go API with SQLite turns observations into deduplicated incidents and keeps a durable outbox, so no notification is lost across restarts.</p></div>
+        <div class="card"><h3>You</h3><p>Messages on Telegram, a web dashboard to manage rules and targets, and an iPhone app paired with a one-time QR code.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="never">
+    <div class="wrap">
+      <h2>Read-only by design</h2>
+      <p class="intro">Homelab Notify reads and notifies. It cannot be asked to change your server, so it cannot be tricked into it.</p>
+      <ul class="never">
+        <li>Restart or stop containers</li>
+        <li>Install updates or run <code>apt</code></li>
+        <li>Ban addresses or change the firewall</li>
+        <li>Change SSH or service configuration</li>
+        <li>Open a shell or run commands</li>
+        <li>Accept commands from the network</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="app">
+    <div class="wrap">
+      <h2>The iPhone app</h2>
+      <p class="intro">Open incidents, acknowledge them, choose which containers to watch, tune rules and plan maintenance. It talks only to your server, and a built-in demo lets you try every screen without one.</p>
+      <div class="shots">
+        <figure class="phone"><img src="assets/screens/02-incidents.webp" width="600" height="1304" loading="lazy" alt="Incidents list with a critical container incident and a low disk warning."><figcaption>Incidents</figcaption></figure>
+        <figure class="phone"><img src="assets/screens/03-incident.webp" width="600" height="1304" loading="lazy" alt="Incident detail for the jellyfin container with the Acknowledge button and its details."><figcaption>Acknowledge</figcaption></figure>
+        <figure class="phone"><img src="assets/screens/04-services.webp" width="600" height="1304" loading="lazy" alt="Services screen with switches to choose which containers are watched, and disk usage."><figcaption>Choose what to watch</figcaption></figure>
+        <figure class="phone"><img src="assets/screens/06-guide.webp" width="600" height="1304" loading="lazy" alt="The built-in guide highlighting the incident summary on the Home screen."><figcaption>Built-in guide</figcaption></figure>
+      </div>
+      <p class="muted">Screenshots from the app's demo mode, with sample data.</p>
+    </div>
+  </section>
+
+  <section id="requirements">
+    <div class="wrap text">
+      <h2>What you need</h2>
+      <ul class="requirements">
+        <li>One Ubuntu server with Docker Compose (tested on Ubuntu 26.04).</li>
+        <li>A Telegram bot for notifications. An existing bot keeps working: Homelab Notify only sends.</li>
+        <li>For the iPhone app: the dashboard reachable over HTTPS with a trusted certificate, for example through Tailscale Serve. iOS 17 or later.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="support">
+    <div class="wrap text">
+      <h2>Support</h2>
+      <p>To pair the iPhone app, open the server dashboard, go to <strong>Devices → Pair an iPhone</strong>, scan the QR code with the iPhone camera and approve the device in the dashboard. The pairing code works once and expires after two minutes.</p>
+      <p>If the app shows an offline copy, the server could not be reached: check that the HTTPS address opens in Safari on the same iPhone.</p>
+      <p>Questions or problems: <a href="mailto:contactus@binarybuilders.dev">contactus@binarybuilders.dev</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 BinaryBuilders</span>
+    <span>
+      <a href="privacy.html">Privacy policy</a> ·
+      <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of use (Apple standard EULA)</a> ·
+      <a href="mailto:contactus@binarybuilders.dev">Contact</a>
+    </span>
+  </div>
+</footer>
+</body>
+</html>

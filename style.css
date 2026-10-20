@@ -1,0 +1,102 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f8f7fa;
+  --surface: #ffffff;
+  --text: #20253a;
+  --muted: #596274;
+  --accent: #6844a8;
+  --accent-hover: #55358d;
+  --border: #e4dfeb;
+  --dot: #a785e6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15121b;
+    --surface: #211c2b;
+    --text: #f5f2fa;
+    --muted: #b5afc2;
+    --accent: #c5adf5;
+    --accent-hover: #d7c3fc;
+    --border: #3b3348;
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.6 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+a { color: var(--accent); }
+a:hover { color: var(--accent-hover); }
+img { max-width: 100%; height: auto; display: block; }
+code { font: 0.9em ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+.narrow { max-width: 720px; }
+.muted { color: var(--muted); }
+
+header.top { padding: 20px 0; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.logo img { width: 220px; }
+nav { white-space: nowrap; }
+nav a { margin-left: 20px; text-decoration: none; color: var(--muted); font-weight: 500; }
+nav a:hover { color: var(--text); }
+
+.hero { padding-top: 48px; padding-bottom: 32px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.1; margin: 0 0 16px; letter-spacing: -0.02em; }
+.hero p.lead { font-size: 1.2rem; color: var(--muted); margin: 0 0 24px; }
+.status { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font-size: 0.9rem; color: var(--muted); }
+.status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--dot); }
+.hero .phone { justify-self: center; max-width: 300px; }
+
+.phone img { border-radius: 36px; border: 1px solid var(--border); box-shadow: 0 20px 50px rgb(32 37 58 / 0.15); }
+
+section { padding: 56px 0; }
+section h2 { font-size: 1.8rem; margin: 0 0 8px; letter-spacing: -0.01em; }
+section > .wrap > p.intro { color: var(--muted); margin: 0 0 32px; max-width: 640px; }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+.card h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+.flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: step; }
+.flow .card { position: relative; }
+.flow .card h3::before { counter-increment: step; content: counter(step) '. '; color: var(--accent); }
+
+.never { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 24px; }
+.never li { padding-left: 24px; position: relative; }
+.never li::before { content: '✕'; position: absolute; left: 0; color: var(--muted); }
+
+.shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.shots figure { margin: 0; }
+.shots figcaption { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 10px; }
+
+.text p, .text ul { max-width: 720px; }
+.requirements { padding-left: 20px; margin: 0; }
+.requirements li { margin-bottom: 6px; }
+
+footer { border-top: 1px solid var(--border); padding: 32px 0 48px; color: var(--muted); font-size: 0.9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+footer a { color: var(--muted); }
+
+.doc h1 { font-size: 2rem; margin: 24px 0 4px; }
+.doc h2 { font-size: 1.3rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding-top: 24px; }
+  .hero .phone { max-width: 240px; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .flow { grid-template-columns: 1fr; }
+  .shots { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .grid { grid-template-columns: 1fr; }
+  .logo img { width: 170px; }
+  nav a { margin-left: 12px; }
+  nav a.optional { display: none; }
+}
