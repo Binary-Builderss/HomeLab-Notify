@@ -3,133 +3,237 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Homelab Notify · Quiet alerts for your homelab</title>
-<meta name="description" content="Self-hosted, read-only notifications for one Ubuntu server: Docker containers, disk space, SSH failures and APT updates, delivered to Telegram, with an iPhone app.">
+<title>Homelab Notify: quiet alerts for your homelab</title>
+<meta name="description" content="Self-hosted, read-only monitoring for one Ubuntu server. Docker containers, disk space, SSH failures and Ubuntu updates, one Telegram message per problem, and an iPhone app.">
+<meta name="theme-color" content="#f8f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15121b" media="(prefers-color-scheme: dark)">
 <meta property="og:title" content="Homelab Notify">
 <meta property="og:description" content="Quiet alerts for your homelab. Self-hosted and read-only.">
 <meta property="og:image" content="https://binary-builderss.github.io/HomeLab-Notify/assets/og.png">
+<meta property="og:url" content="https://binary-builderss.github.io/HomeLab-Notify/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon-auto.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-light.ico" sizes="any">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
-<header class="top">
-  <div class="wrap">
-    <a class="logo" href="./" aria-label="Homelab Notify home">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
-        <img src="assets/logo-light.svg" alt="Homelab Notify by BinaryBuilders" width="220" height="65">
-      </picture>
-    </a>
-    <nav aria-label="Main">
-      <a class="optional" href="#how">How it works</a>
-      <a href="#app">iPhone app</a>
-      <a href="#support">Support</a>
-    </nav>
-  </div>
-</header>
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="i-shipping-container" viewBox="0 0 256 256"><path d="M235.85,72.57,129.65,42.23a6,6,0,0,0-2.5-.17L22,57.08A14.07,14.07,0,0,0,10,70.94V185.06a14.07,14.07,0,0,0,12,13.86l105.13,15a6.07,6.07,0,0,0,.85.06,6.14,6.14,0,0,0,1.65-.23l106.2-30.34A14.06,14.06,0,0,0,246,170V86A14.06,14.06,0,0,0,235.85,72.57ZM96,122H78V61.2l44-6.28V201.08L78,194.8V134H96a6,6,0,0,0,0-12ZM22,185.06V70.94a2,2,0,0,1,1.72-2l42.28-6V122H48a6,6,0,0,0,0,12H66v59.08l-42.28-6A2,2,0,0,1,22,185.06ZM234,170a2,2,0,0,1-1.45,1.92L134,200.05V56l98.55,28.16A2,2,0,0,1,234,86Z"/></symbol>
+  <symbol id="i-hard-drives" viewBox="0 0 256 256"><path d="M208,138H48a14,14,0,0,0-14,14v48a14,14,0,0,0,14,14H208a14,14,0,0,0,14-14V152A14,14,0,0,0,208,138Zm2,62a2,2,0,0,1-2,2H48a2,2,0,0,1-2-2V152a2,2,0,0,1,2-2H208a2,2,0,0,1,2,2ZM208,42H48A14,14,0,0,0,34,56v48a14,14,0,0,0,14,14H208a14,14,0,0,0,14-14V56A14,14,0,0,0,208,42Zm2,62a2,2,0,0,1-2,2H48a2,2,0,0,1-2-2V56a2,2,0,0,1,2-2H208a2,2,0,0,1,2,2ZM190,80a10,10,0,1,1-10-10A10,10,0,0,1,190,80Zm0,96a10,10,0,1,1-10-10A10,10,0,0,1,190,176Z"/></symbol>
+  <symbol id="i-fingerprint" viewBox="0 0 256 256"><path d="M70,128a132.68,132.68,0,0,1-14,59.58,6,6,0,0,1-5.38,3.33,6,6,0,0,1-5.36-8.67A120.74,120.74,0,0,0,58,128,69.72,69.72,0,0,1,84.25,73.36a6,6,0,0,1,7.51,9.37A57.73,57.73,0,0,0,70,128Zm58-6a6,6,0,0,0-6,6,186.07,186.07,0,0,1-23.23,90.07,6,6,0,0,0,10.5,5.82A198.14,198.14,0,0,0,134,128,6,6,0,0,0,128,122Zm0-32a38,38,0,0,0-38,38,6,6,0,0,0,12,0,26,26,0,0,1,52,0,216.06,216.06,0,0,1-20.71,92.85A6,6,0,1,0,144.16,226,227.94,227.94,0,0,0,166,128,38,38,0,0,0,128,90Zm0-64A102.11,102.11,0,0,0,26,128a90,90,0,0,1-5.12,30,6,6,0,1,0,11.31,4A101.83,101.83,0,0,0,38,128a90,90,0,0,1,180,0,284.7,284.7,0,0,1-5.33,54.84,6,6,0,0,0,4.72,7.05,6.8,6.8,0,0,0,1.17.11,6,6,0,0,0,5.88-4.84A295.92,295.92,0,0,0,230,128,102.12,102.12,0,0,0,128,26ZM94,154.13a6,6,0,0,0-7.07,4.69,152.82,152.82,0,0,1-17.44,46,6,6,0,0,0,10.4,6,164.77,164.77,0,0,0,18.8-49.65A6,6,0,0,0,94,154.13ZM128,58a70.76,70.76,0,0,0-8.75.54,6,6,0,1,0,1.49,11.91A58,58,0,0,1,186,128a252.27,252.27,0,0,1-1.94,31.26,6,6,0,0,0,5.21,6.69,6.59,6.59,0,0,0,.75,0,6,6,0,0,0,5.95-5.26A266.46,266.46,0,0,0,198,128,70.08,70.08,0,0,0,128,58ZM185.44,186.2a6,6,0,0,0-7.31,4.31c-1.47,5.74-3.18,11.49-5.06,17.09a6,6,0,0,0,11.38,3.82c2-5.88,3.75-11.9,5.3-17.92A6,6,0,0,0,185.44,186.2Z"/></symbol>
+  <symbol id="i-package" viewBox="0 0 256 256"><path d="M222.72,67.91l-88-48.18a13.9,13.9,0,0,0-13.44,0l-88,48.18A14,14,0,0,0,26,80.18v95.64a14,14,0,0,0,7.28,12.27l88,48.18a13.92,13.92,0,0,0,13.44,0l88-48.18A14,14,0,0,0,230,175.82V80.18A14,14,0,0,0,222.72,67.91ZM127,30.25a2,2,0,0,1,1.92,0L212.51,76,178.57,94.57,94.05,48.31ZM122,223,39,177.57a2,2,0,0,1-1-1.75V86.66l84,46ZM43.49,76,81.56,55.15l84.51,46.26L128,122.24ZM218,175.82a2,2,0,0,1-1,1.75h0L134,223V132.64l36-19.71V152a6,6,0,0,0,12,0V106.37l36-19.71Z"/></symbol>
+  <symbol id="i-heartbeat" viewBox="0 0 256 256"><path d="M72,142H32a6,6,0,0,1,0-12H68.79L83,108.67a6,6,0,0,1,10,0l27,40.51,11-16.51a6,6,0,0,1,5-2.67h24a6,6,0,0,1,0,12H139.21L125,163.33a6,6,0,0,1-10,0L88,122.82,77,139.33A6,6,0,0,1,72,142ZM178,42c-21,0-39.26,9.47-50,25.34C117.26,51.47,99,42,78,42a60.07,60.07,0,0,0-60,60q0,1.09,0,2.19a6,6,0,0,0,12-.38c0-.6,0-1.21,0-1.81A48.05,48.05,0,0,1,78,54c20.28,0,37.31,10.83,44.45,28.27a6,6,0,0,0,11.1,0C140.69,64.83,157.72,54,178,54a48.05,48.05,0,0,1,48,48c0,55.73-81.61,105.65-98,115.11-9.84-5.66-43.09-25.82-68.16-53.16a6,6,0,1,0-8.84,8.1c30.94,33.77,72.41,56.29,74.16,57.23a6,6,0,0,0,5.68,0,334.68,334.68,0,0,0,53.06-37C219.8,161.59,238,131.2,238,102A60.07,60.07,0,0,0,178,42Z"/></symbol>
+  <symbol id="i-moon-stars" viewBox="0 0 256 256"><path d="M238,96a6,6,0,0,1-6,6H214v18a6,6,0,0,1-12,0V102H184a6,6,0,0,1,0-12h18V72a6,6,0,0,1,12,0V90h18A6,6,0,0,1,238,96ZM144,54h10V64a6,6,0,0,0,12,0V54h10a6,6,0,0,0,0-12H166V32a6,6,0,0,0-12,0V42H144a6,6,0,0,0,0,12Zm71.25,100.28a6,6,0,0,1,1.07,6A94,94,0,1,1,95.76,39.68a6,6,0,0,1,7.94,6.79A90.11,90.11,0,0,0,192,154a90.9,90.9,0,0,0,17.53-1.7A6,6,0,0,1,215.25,154.28Zm-14.37,11.34q-4.42.38-8.88.38A102.12,102.12,0,0,1,90,64q0-4.45.38-8.88a82,82,0,1,0,110.5,110.5Z"/></symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 256 256"><path d="M198,64V168a6,6,0,0,1-12,0V78.48L68.24,196.24a6,6,0,0,1-8.48-8.48L177.52,70H88a6,6,0,0,1,0-12H192A6,6,0,0,1,198,64Z"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 256 256"><path d="M204.24,148.24l-72,72a6,6,0,0,1-8.48,0l-72-72a6,6,0,0,1,8.48-8.48L122,201.51V40a6,6,0,0,1,12,0V201.51l61.76-61.75a6,6,0,0,1,8.48,8.48Z"/></symbol>
+  <symbol id="i-telegram-logo" viewBox="0 0 256 256"><path d="M227.57,27.7a7,7,0,0,0-7.13-1.22L17.78,105.79a12.23,12.23,0,0,0,2.1,23.39L74,139.81V200a14,14,0,0,0,24.08,9.71l26.64-27.63,41.58,36.45a13.9,13.9,0,0,0,9.2,3.49,14.33,14.33,0,0,0,4.36-.69,13.86,13.86,0,0,0,9.34-10.17L229.82,34.57A7,7,0,0,0,227.57,27.7ZM22.05,117.37h0a.46.46,0,0,1,0-.32.51.51,0,0,1,.15-.08L181.91,54.45l-103.3,74L22.2,117.41Zm67.39,84A2,2,0,0,1,86,200V148.11l29.69,26Zm88.07,7.08a1.93,1.93,0,0,1-1.34,1.44,2,2,0,0,1-2-.4L89.64,135.34,215,45.5Z"/></symbol>
+  <symbol id="i-device-mobile" viewBox="0 0 256 256"><path d="M176,18H80A22,22,0,0,0,58,40V216a22,22,0,0,0,22,22h96a22,22,0,0,0,22-22V40A22,22,0,0,0,176,18ZM70,62H186V194H70ZM80,30h96a10,10,0,0,1,10,10V50H70V40A10,10,0,0,1,80,30Zm96,196H80a10,10,0,0,1-10-10V206H186v10A10,10,0,0,1,176,226Z"/></symbol>
+  <symbol id="i-prohibit" viewBox="0 0 256 256"><path d="M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm90,102a89.6,89.6,0,0,1-22.29,59.22L68.78,60.29A89.95,89.95,0,0,1,218,128ZM38,128A89.6,89.6,0,0,1,60.29,68.78L187.22,195.71A89.95,89.95,0,0,1,38,128Z"/></symbol>
+  <symbol id="i-lock-key" viewBox="0 0 256 256"><path d="M208,82H174V56a46,46,0,0,0-92,0V82H48A14,14,0,0,0,34,96V208a14,14,0,0,0,14,14H208a14,14,0,0,0,14-14V96A14,14,0,0,0,208,82ZM94,56a34,34,0,0,1,68,0V82H94ZM210,208a2,2,0,0,1-2,2H48a2,2,0,0,1-2-2V96a2,2,0,0,1,2-2H208a2,2,0,0,1,2,2Zm-82-94a26,26,0,0,0-6,51.29V184a6,6,0,0,0,12,0V165.29A26,26,0,0,0,128,114Zm0,40a14,14,0,1,1,14-14A14,14,0,0,1,128,154Z"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
 
-<main>
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="./" aria-label="Homelab Notify home">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/logo-nav-dark.svg">
+      <img src="assets/logo-nav-light.svg" alt="Homelab Notify" width="180" height="42">
+    </picture>
+  </a>
+  <ul>
+    <li class="optional"><a href="#how">How it works</a></li>
+    <li><a href="#app">iPhone app</a></li>
+    <li><a href="#start">Support</a></li>
+  </ul>
+</nav>
+
+<main id="main">
   <div class="wrap hero">
     <div>
-      <h1>Quiet alerts for your homelab.</h1>
-      <p class="lead">Homelab Notify watches one Ubuntu server and tells you on Telegram when something needs you: a container that stopped, a disk filling up, a burst of SSH login failures, pending updates. One problem, one message. It only reads, never touches.</p>
-      <span class="status">In development · iPhone app coming to the App Store</span>
+      <h1 class="rise">Quiet alerts for your <em>homelab.</em></h1>
+      <p class="lead rise" style="--i:1">Self-hosted monitoring for one Ubuntu server. One problem, one Telegram message. It reads, it never touches.</p>
+      <div class="actions rise" style="--i:2">
+        <a class="button down" href="#how">How it works <span class="knob"><svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg></span></a>
+        <a class="link" href="#app">See the iPhone app</a>
+      </div>
     </div>
-    <div class="phone">
-      <img src="assets/screens/01-home.webp" width="600" height="1304" alt="The iPhone app Home screen: one critical and one warning incident, the host agent reporting, every collector ok.">
+    <div class="stack">
+      <div class="device back"><img src="assets/screens/02-incidents.webp" width="640" height="1391" alt="Incidents on the iPhone: a critical container incident and a low disk space warning."></div>
+      <div class="device front"><img src="assets/screens/01-home.webp" width="640" height="1391" alt="The Home screen: one critical and one warning incident, the host agent reporting, every collector ok." fetchpriority="high"></div>
     </div>
   </div>
 
-  <section id="what">
+  <section id="watch">
     <div class="wrap">
-      <h2>What it watches</h2>
-      <p class="intro">Sensible defaults out of the box, every threshold editable from the dashboard or the app.</p>
-      <div class="grid">
-        <div class="card"><h3>Docker containers</h3><p>Only the containers you select. Not running or unhealthy for 30 seconds opens an incident; it closes when the container is back.</p></div>
-        <div class="card"><h3>Disk space</h3><p>Measured on the host, not inside a container. Below 10% free for 5 minutes is critical. Missing data is reported as unknown, never as healthy.</p></div>
-        <div class="card"><h3>SSH login failures</h3><p>Five failures from one address in two minutes raise one warning per address, with a cooldown so a scan does not flood you.</p></div>
-        <div class="card"><h3>Ubuntu updates</h3><p>A daily digest at 09:00 when packages are pending. It reads the local APT cache and never runs <code>apt update</code>.</p></div>
-        <div class="card"><h3>The agent itself</h3><p>If the host agent stops reporting for three minutes, you hear about it.</p></div>
-        <div class="card"><h3>Quiet hours and maintenance</h3><p>Night hours hold minor notices; critical ones still arrive. Maintenance windows record incidents without notifying.</p></div>
+      <div class="section-head reveal">
+        <h2>Four things that break a homelab, watched closely.</h2>
+        <p>Sensible defaults from the first minute. Every threshold can be changed in the dashboard or the app.</p>
+      </div>
+      <div class="bento">
+        <article class="tile t-docker reveal">
+          <div class="core">
+            <h3><svg class="icon" aria-hidden="true"><use href="#i-shipping-container"/></svg>Docker containers you choose</h3>
+            <p>Containers are discovered, never watched by surprise. Switch on the ones that must stay up: if one stops or turns unhealthy for 30 seconds you get one message, and another when it is back.</p>
+            <div class="shot"><img src="assets/screens/crop-containers.webp" width="800" height="642" loading="lazy" alt="Container switches in the app: nextcloud, jellyfin and immich-server watched, the Homelab Notify server and a nightly backup job left off."></div>
+          </div>
+        </article>
+        <article class="tile t-disk reveal" style="--i:1">
+          <div class="core">
+            <h3><svg class="icon" aria-hidden="true"><use href="#i-hard-drives"/></svg>Disk space, on the host</h3>
+            <p>Measured on the real filesystems, not inside a container. Missing data shows as unknown, never as healthy.</p>
+            <dl class="facts"><div><dt>alert below</dt><dd>10% free</dd></div><div><dt>for at least</dt><dd>5 min</dd></div></dl>
+          </div>
+        </article>
+        <article class="tile t-ssh reveal" style="--i:2">
+          <div class="core">
+            <h3><svg class="icon" aria-hidden="true"><use href="#i-fingerprint"/></svg>SSH login failures</h3>
+            <p>Grouped by address, with a cooldown, so a scan is one warning and not a flood.</p>
+            <dl class="facts"><div><dt>failures</dt><dd>5</dd></div><div><dt>within</dt><dd>2 min</dd></div></dl>
+          </div>
+        </article>
+        <article class="tile t-apt reveal">
+          <div class="core">
+            <h3><svg class="icon" aria-hidden="true"><use href="#i-package"/></svg>Ubuntu updates</h3>
+            <p>One digest a day at 09:00 when packages are pending. It reads the local APT cache and never runs <code>apt update</code>.</p>
+            <dl class="facts"><div><dt>digest at</dt><dd>09:00</dd></div><div><dt>apt update</dt><dd>never</dd></div></dl>
+          </div>
+        </article>
+        <article class="tile t-agent reveal" style="--i:1">
+          <div class="core">
+            <h3><svg class="icon" aria-hidden="true"><use href="#i-heartbeat"/></svg>The watcher itself</h3>
+            <p>If the agent goes silent, that is an alert too.</p>
+            <p class="big">180<small>seconds</small></p>
+          </div>
+        </article>
+        <article class="tile t-quiet reveal" style="--i:2">
+          <div class="core">
+            <h3><svg class="icon" aria-hidden="true"><use href="#i-moon-stars"/></svg>Quiet hours and maintenance</h3>
+            <p>Minor notices wait for the morning; critical ones still arrive. Planned work is recorded without paging you.</p>
+            <div class="shot"><img src="assets/screens/crop-maintenance.webp" width="800" height="206" loading="lazy" alt="A scheduled maintenance window for the nextcloud container in the app."></div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section id="how">
-    <div class="wrap">
-      <h2>How it works</h2>
-      <p class="intro">Everything runs on your server. No cloud service, no account, nothing sent to us.</p>
-      <div class="flow">
-        <div class="card"><h3>Agent on the host</h3><p>A small Go service under systemd reads Docker, disk, the SSH journal and the APT cache, and reports to the server over loopback only.</p></div>
-        <div class="card"><h3>Server in Docker</h3><p>A Go API with SQLite turns observations into deduplicated incidents and keeps a durable outbox, so no notification is lost across restarts.</p></div>
-        <div class="card"><h3>You</h3><p>Messages on Telegram, a web dashboard to manage rules and targets, and an iPhone app paired with a one-time QR code.</p></div>
+  <section id="how" class="how">
+    <div class="wrap split">
+      <div class="sticky reveal">
+        <h2>Three parts. All of them on your server.</h2>
+        <p>No cloud service, no account, nothing sent to us. If your internet goes down, the incidents are still recorded and delivered when it is back.</p>
       </div>
+      <ol class="parts">
+        <li class="reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-hard-drives"/></svg>
+          <div>
+            <h3>On the host</h3>
+            <p>A small Go agent under systemd reads Docker, disk space, the SSH journal and the APT cache. It talks to the server over loopback only, and keeps a local queue if the server restarts.</p>
+            <p class="tech">systemd, unprivileged user, loopback only</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-lock-key"/></svg>
+          <div>
+            <h3>In Docker</h3>
+            <p>A Go API with SQLite turns observations into incidents: opened once, notified once, closed when the check recovers. A durable outbox means no message is lost across restarts.</p>
+            <p class="tech">non-root, read-only filesystem, no Docker socket</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-telegram-logo"/></svg>
+          <div>
+            <h3>To you</h3>
+            <p>Messages on Telegram, a web dashboard for rules and containers, and an iPhone app paired with a one-time QR code you approve.</p>
+            <p class="tech">Telegram, dashboard, iPhone</p>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 
-  <section id="never">
+  <section id="principles" class="manifesto">
     <div class="wrap">
-      <h2>Read-only by design</h2>
-      <p class="intro">Homelab Notify reads and notifies. It cannot be asked to change your server, so it cannot be tricked into it.</p>
-      <ul class="never">
-        <li>Restart or stop containers</li>
-        <li>Install updates or run <code>apt</code></li>
-        <li>Ban addresses or change the firewall</li>
-        <li>Change SSH or service configuration</li>
-        <li>Open a shell or run commands</li>
-        <li>Accept commands from the network</li>
+      <h2 class="reveal">It reads. It notifies. <span>It never touches your server.</span></h2>
+      <ul class="never" aria-label="What Homelab Notify never does">
+        <li class="reveal"><svg class="icon" aria-hidden="true"><use href="#i-prohibit"/></svg>No restarting containers</li>
+        <li class="reveal" style="--i:1"><svg class="icon" aria-hidden="true"><use href="#i-prohibit"/></svg>No installing updates</li>
+        <li class="reveal" style="--i:2"><svg class="icon" aria-hidden="true"><use href="#i-prohibit"/></svg>No banning addresses</li>
+        <li class="reveal"><svg class="icon" aria-hidden="true"><use href="#i-prohibit"/></svg>No firewall or SSH changes</li>
+        <li class="reveal" style="--i:1"><svg class="icon" aria-hidden="true"><use href="#i-prohibit"/></svg>No remote shell</li>
+        <li class="reveal" style="--i:2"><svg class="icon" aria-hidden="true"><use href="#i-prohibit"/></svg>No commands from the network</li>
       </ul>
     </div>
   </section>
 
-  <section id="app">
+  <section id="app" class="app">
+    <div class="wrap"><div class="section-head reveal">
+      <h2>Your server, in your pocket.</h2>
+      <p>Acknowledge incidents, choose what to watch, tune rules and plan maintenance. The app talks only to your server, and a built-in demo lets you try every screen without one.</p>
+      <p class="app-note"><svg class="icon" aria-hidden="true"><use href="#i-device-mobile"/></svg>Coming to the App Store for iPhone and iPad.</p>
+    </div></div>
+    <div class="gallery" tabindex="0" role="region" aria-label="App screenshots, scroll sideways">
+      <figure class="reveal"><div class="device"><img src="assets/screens/02-incidents.webp" width="640" height="1391" loading="lazy" alt="Incidents list with a critical container incident and a low disk warning."></div><figcaption><strong>Incidents</strong><span>One problem, one incident.</span></figcaption></figure>
+      <figure class="reveal" style="--i:1"><div class="device"><img src="assets/screens/03-incident.webp" width="640" height="1391" loading="lazy" alt="Incident detail for the jellyfin container with the Acknowledge button and its details."></div><figcaption><strong>Acknowledge</strong><span>Say you are on it.</span></figcaption></figure>
+      <figure class="reveal" style="--i:2"><div class="device"><img src="assets/screens/04-services.webp" width="640" height="1391" loading="lazy" alt="Services screen with switches for the watched containers and disk usage."></div><figcaption><strong>Services</strong><span>Pick what matters.</span></figcaption></figure>
+      <figure class="reveal" style="--i:3"><div class="device"><img src="assets/screens/05-rules.webp" width="640" height="1391" loading="lazy" alt="Rules screen listing the five default rules with their severity."></div><figcaption><strong>Rules</strong><span>Thresholds you control.</span></figcaption></figure>
+      <figure class="reveal" style="--i:4"><div class="device"><img src="assets/screens/07-maintenance.webp" width="640" height="1391" loading="lazy" alt="Maintenance screen with a scheduled window for nextcloud."></div><figcaption><strong>Maintenance</strong><span>Work without pages.</span></figcaption></figure>
+      <figure class="reveal" style="--i:5"><div class="device"><img src="assets/screens/06-guide.webp" width="640" height="1391" loading="lazy" alt="The built-in guide highlighting the incident summary on the Home screen."></div><figcaption><strong>Guide</strong><span>A tour on your own data.</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section id="start" class="start">
     <div class="wrap">
-      <h2>The iPhone app</h2>
-      <p class="intro">Open incidents, acknowledge them, choose which containers to watch, tune rules and plan maintenance. It talks only to your server, and a built-in demo lets you try every screen without one.</p>
-      <div class="shots">
-        <figure class="phone"><img src="assets/screens/02-incidents.webp" width="600" height="1304" loading="lazy" alt="Incidents list with a critical container incident and a low disk warning."><figcaption>Incidents</figcaption></figure>
-        <figure class="phone"><img src="assets/screens/03-incident.webp" width="600" height="1304" loading="lazy" alt="Incident detail for the jellyfin container with the Acknowledge button and its details."><figcaption>Acknowledge</figcaption></figure>
-        <figure class="phone"><img src="assets/screens/04-services.webp" width="600" height="1304" loading="lazy" alt="Services screen with switches to choose which containers are watched, and disk usage."><figcaption>Choose what to watch</figcaption></figure>
-        <figure class="phone"><img src="assets/screens/06-guide.webp" width="600" height="1304" loading="lazy" alt="The built-in guide highlighting the incident summary on the Home screen."><figcaption>Built-in guide</figcaption></figure>
+      <div class="panel reveal">
+        <div class="core">
+          <div>
+            <h2>What you need</h2>
+            <ol class="needs">
+              <li>One Ubuntu server with Docker Compose. Tested on Ubuntu 26.04.</li>
+              <li>A Telegram bot. An existing bot keeps working: Homelab Notify only sends.</li>
+              <li>For the app: the dashboard over HTTPS with a trusted certificate, for example with Tailscale Serve, and iOS 17 or later.</li>
+            </ol>
+          </div>
+          <div class="support">
+            <h2>Support</h2>
+            <p>To pair the app, open the dashboard, go to <strong>Devices</strong> and choose <strong>Pair an iPhone</strong>. Scan the QR code with the camera, then approve the device in the dashboard. The code works once and expires after two minutes.</p>
+            <p>If the app shows an offline copy, it could not reach the server: check that the HTTPS address opens in Safari on the same iPhone.</p>
+            <a class="button" href="mailto:contactus@binarybuilders.dev">Contact <span class="knob"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span></a>
+          </div>
+        </div>
       </div>
-      <p class="muted">Screenshots from the app's demo mode, with sample data.</p>
-    </div>
-  </section>
-
-  <section id="requirements">
-    <div class="wrap text">
-      <h2>What you need</h2>
-      <ul class="requirements">
-        <li>One Ubuntu server with Docker Compose (tested on Ubuntu 26.04).</li>
-        <li>A Telegram bot for notifications. An existing bot keeps working: Homelab Notify only sends.</li>
-        <li>For the iPhone app: the dashboard reachable over HTTPS with a trusted certificate, for example through Tailscale Serve. iOS 17 or later.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="support">
-    <div class="wrap text">
-      <h2>Support</h2>
-      <p>To pair the iPhone app, open the server dashboard, go to <strong>Devices → Pair an iPhone</strong>, scan the QR code with the iPhone camera and approve the device in the dashboard. The pairing code works once and expires after two minutes.</p>
-      <p>If the app shows an offline copy, the server could not be reached: check that the HTTPS address opens in Safari on the same iPhone.</p>
-      <p>Questions or problems: <a href="mailto:contactus@binarybuilders.dev">contactus@binarybuilders.dev</a>.</p>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 BinaryBuilders</span>
-    <span>
-      <a href="privacy.html">Privacy policy</a> ·
-      <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of use (Apple standard EULA)</a> ·
-      <a href="mailto:contactus@binarybuilders.dev">Contact</a>
-    </span>
+    <a class="logo" href="./" aria-label="Homelab Notify home">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+        <img src="assets/logo-light.svg" alt="Homelab Notify by BinaryBuilders" width="300" height="89" loading="lazy">
+      </picture>
+    </a>
+    <nav aria-label="Legal">
+      <span>© 2026 BinaryBuilders</span>
+      <div>
+        <a href="privacy.html">Privacy policy</a>
+        <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of use</a>
+        <a href="mailto:contactus@binarybuilders.dev">contactus@binarybuilders.dev</a>
+      </div>
+    </nav>
   </div>
 </footer>
+
+<script>
+  // Reveal sections as they enter the viewport; everything stays visible without JS.
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) }
+  }, { rootMargin: '0px 0px -10% 0px' })
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
+</script>
 </body>
 </html>
